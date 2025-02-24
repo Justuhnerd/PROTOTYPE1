@@ -121,9 +121,19 @@
         <source src="/api/placeholder/400/320" type="video/mp4">
     </video>
 
+    <div class="camera-container text-center">
+        <video class="camera-view" id="cameraView" autoplay playsinline></video>
+        
+        <div class="mt-3">
+            <button class="btn btn-outline-primary" onclick="toggleCamera()">
+                <i class="fas fa-camera"></i> Use Rear Camera
+            </button>
+        </div>
+    </div>
+    
     <!-- Top Bar -->
     <div class="top-bar">
-        <a href="report.html" class="btn btn-outline-light btn-sm">
+        <a href="index.html" class="btn btn-outline-light btn-sm">
             <i class="fas fa-arrow-left"></i> Back
         </a>
         <div class="ar-indicator">
@@ -244,6 +254,32 @@
                     });
             }
         });
+
+
+
+        let currentStream = null;
+    
+    async function toggleCamera() {
+        if (currentStream) {
+            currentStream.getTracks().forEach(track => track.stop()); // Stop existing camera
+        }
+
+        const constraints = {
+            video: {
+                facingMode: "environment" // Use rear camera
+            }
+        };
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            document.getElementById('cameraView').srcObject = stream;
+            currentStream = stream;
+        } catch (error) {
+            console.error("Camera access denied or not available:", error);
+            alert("Unable to access rear camera.");
+        }
+    }
+    
     </script>
 </body>
 </html>
