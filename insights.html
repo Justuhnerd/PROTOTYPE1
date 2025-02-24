@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/yourfontawesomekit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="atm-details-card">
+            <div class="status-badge bg-success text-white">Working</div>
+            <h2 id="atmName">ATM Name</h2>
+            <p class="text-muted" id="atmDistance">Distance away</p>
+            
+            <div class="mb-3">
+                <strong>Available Notes:</strong>
+                <span class="badge bg-success mx-1">P10</span>
+                <span class="badge bg-danger mx-1">P20 (Low)</span>
+                <span class="badge bg-success mx-1">P50</span>
+                <span class="badge bg-success mx-1">P100</span>
+            </div>
+
+            <div class="mb-3">
+                <strong>Services:</strong>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success"></i> Cash Withdrawal</li>
+                    <li><i class="fas fa-check text-success"></i> Card-less Withdrawal</li>
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <strong>Rating:</strong>
+                <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i> (4.5)
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger" onclick="getDirections()">
+                    <i class="fas fa-directions"></i> Get Directions
+                </button>
+                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                    <i class="fas fa-comment"></i> Leave Feedback
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Extract ATM ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const atmId = urlParams.get('id');
+
+        // Example ATM Data
+        const atmData = {
+            "1": { name: "Main Mall ATM", distance: "50m away", status: "Working", rating: 4.5 },
+            "2": { name: "Riverwalk ATM", distance: "120m away", status: "Maintenance", rating: 3.8 }
+        };
+
+        // Populate ATM details dynamically
+        if (atmId && atmData[atmId]) {
+            document.getElementById("atmName").textContent = atmData[atmId].name;
+            document.getElementById("atmDistance").textContent = atmData[atmId].distance;
+        }
+    </script>
+
+</body>
+</html>
